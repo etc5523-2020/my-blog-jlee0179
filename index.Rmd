@@ -1,9 +1,199 @@
 ---
-title: "My Website"
+title: "COVID-19 in Portugal"
 ---
 
-Hello, Website!
+Hello and Welcome!
 
-For more information about simple R Markdown websites, please read the documentation at https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html.
+How have you been this year, 2020?
 
-Please also note that simple R Markdown sites are _not_ based on **blogdown**. They are probably good for websites with only a few Rmd documents. For larger-scale and more sophisticated websites (such as blogs), you may want to use **blogdown** instead: https://github.com/rstudio/blogdown.
+The incessant up and down in Coronavirus (COVID-19) cases number appears as a roller coaster. Sometimes it slowly travelled through the lower points, but sometimes it accelerated from the lower points to the lift hills! I'd describe us as the passengers who are forced to get on a specific roller coaster for the ride, depending on the geographical location we're currently at. Nevertheless, this ride has drastically changed our usual living patterns, little from an individual to the unrest of industries.
+
+Inspired by [the news article by Demony](https://www.reuters.com/article/us-health-coronavirus-portugal-britain/portugals-covid-19-cases-raise-uk-quarantine-fears-idUSKBN25S5DU), while the spread of COVID-19 cases has been slowing down in many countries, some fluctuations are detected for the pandemic recently in Portugal. Hence, the UK is considering reassessing the need for the 14-day-self-isolation rule for people arriving from Portugal. 
+In this post, we'll be tracing the roller coaster of Portugal to examine the trend of the pandemic in Portugal and discuss the effectiveness of their government's strategy.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(broom)
+library(DT)
+library(ggiraph)
+library(kableExtra)
+library(lubridate)
+library(plotly)
+library(readr)
+library(tidyverse)
+owid_covid_data <- read_csv("owid-covid-data.csv")
+portugal_clean <- owid_covid_data %>%
+  select(-hospital_beds_per_thousand, -handwashing_facilities, -male_smokers, -female_smokers, -diabetes_prevalence, -cardiovasc_death_rate, -extreme_poverty, -gdp_per_capita, -aged_70_older, -aged_65_older, -population_density, -tests_units, -positive_rate, -tests_per_case, -new_tests_smoothed_per_thousand, -new_tests_smoothed, -new_tests_per_thousand, -total_tests_per_thousand, -total_tests, -new_tests, -median_age, -new_deaths_smoothed, -new_cases_smoothed, -new_cases_per_million, -new_deaths_smoothed_per_million, -new_cases_smoothed_per_million) %>%
+  filter(location == "Portugal") %>%
+  filter(!is.na(total_cases))
+```
+
+### Data description
+The data used for analylsis and exploration in this post is all contained within one data set named "owid_covid_data" from [Our World in Data](https://ourworldindata.org/coronavirus-source-data). This data set tersely gathers several health-related measurements or indicators, especially in relevance of COVID-19, through 40 variables. "owid_covid_data" is a relatively cleaned and tidy data set that can be easily manipulated with its readability. Despite its succinctness, Our World in Data updates the data daily, ensuring the information is kept up-to-date with any real-time changes. The data source for cases and deaths-related data as represented by variables, e.g. `total_cases`, `new_cases`, `total_deaths` and more are from the [European Centre for Disease Prevention and Control](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide), which form the main interest of this post.
+Since we only discuss about the condition of COVID-19 in Portugal, the data set is first filtered into Portugal for `location`, then 33 variables are deselected, resulting in 7 variables left from the original data set for the following reasons:
+
+- Contain too many null values: `new_tests`, `total_tests`, `total_tests_per_thousand`, `new_tests_per_thousand`, `new_tests_smoothed`, `new_tests_smoothed_per_thousand`, `tests_per_case`, `positive_rate`, `tests_units` and `handwashing_facilities`.
+
+- Fixed values for entire columns: `population`, `population_density`, `median_age`, `aged_65_older`, `aged_70_older`, `gdp_per_capita`, `extreme_poverty`, `cardiovasc_death_rate`, `diabetes_prevalence`, `female_smokers`, `male_smokers`, `hospital_beds_per_thousand` and `life_expentancy`. 
+
+- Already manipulated / not our interest: `iso_code`, `continent`, `new_cases_smoothed`, `new_deaths_smoothed`, `total_cases_per_million`, `new_cases_per_million`, `new_cases_smoothed_per_million`, `total_deaths_per_million`, `new_deaths_per_million` and `new_deaths_smoothed_per_million`.
+
+The seven variables used are as follows:
+
+`location`: The geographical location
+
+`date`: Observation date
+
+`total_cases`: Number of total confirmed cases reported.
+
+`new_cases`: Number of newly confirmed cases reported. For Portugal, a negative value exists which is the correction due to the overestimate number from a country.
+
+`total_deaths`: Number of total deaths caused by COVID-19.
+
+`new_deaths`: Number of new deaths cuased by COVID-19.
+
+`stringency_index`: Known as "Government Response Stringency Index", the indicator of "strict levels" measured by 9 indices. [from school and workplace closings, transportation, restrictions on travelling and gatherings to stay at home requirements and public information campaigns](https://www.euronews.com/2020/08/31/covid-19-which-european-country-has-the-strictest-response-policy)" with the scale from 0 to 100 in ascending order regarding the strictness.
+
+
+```{r, echo=FALSE}
+cfa <- portugal_clean %>%
+  mutate(`case fatality rate` = round(total_deaths / total_cases, digits = 3)) %>%
+  mutate(`new case fatality rate` = round(new_deaths / new_cases, digits = 3)) %>%
+  select(location, date, total_cases, new_cases, total_deaths, new_deaths, `case fatality rate`, `new case fatality rate`, stringency_index) 
+```
+### Trend for cases and deaths 
+```{r, include=TRUE, echo=FALSE}
+d1 <- ggplot(cfa, aes(x = date)) +
+  geom_point(aes(y = total_cases), size = 0.1, color = "#83C7CE") +
+  geom_line(aes(y = total_cases), size = 0.3, color = "grey") +
+  geom_point(aes(y = total_deaths), size = 0.1, color = "#BF5D4E") +
+  geom_line(aes(y = total_deaths), size = 0.3, color = "grey") +
+  ggtitle("Cumulative number of cases and deaths in Portugal") +
+  xlab("Date") +
+  ylab("Count")
+ggplotly(d1) 
+```
+Total cases displays a significant upward-sloping trend since March 3rd, the day where the first case in Portugal is confirmed. The trend for total deaths is also continuously rising overtime, yet the overall range is extremely slight, compared with that for total cases. The first reported death caused by COVID-19 is on March 18th, which is 15 days apart from the first case being reported. 
+
+The most rapid growth in total cases occurs between April 10th and 11th where the total cases goes up by 1516, at that time total deaths increases by 26, yet this increment isn't the highest among all. Instead, the interval between April 25th and 26th is the peak for total deaths increment where 60 deaths are recorded just within one day. The peak for total cases growth and that for total death growth is again found to be 15 days apart.
+
+From April 9th to April 13th with the highest total cases growth, the Portuguese government adopted the highest stringency index (87.96) during the pandemic. This implementation seems to solely avoid the potential rise of another peak. The index of 87.96 only maintains for 5 days, and it seems to be effective for a short period of time. Nonetheless, from April 25th to 26 th (peak for total deaths growth), the index is lowered to 82.41 until May 1st. Looking at this single aspect, cases number might weigh heavier than deaths number when determining the stringency index. From my opinion, this extrapolation seems reasonable since the cause of deaths due to COVID-19 is much more complicated, which takes into account of various factors.
+
+### Case fatality rate
+```{r, include=TRUE, message=FALSE, warning=FALSE, echo=FALSE}
+b1 <- cfa %>%
+  select(date, total_deaths, total_cases, `case fatality rate`) 
+  DT::datatable(b1, options = list(pageLength = 6), caption = "Case fatality rate daily in Portugal", rownames = FALSE)
+```
+Case fatality rate is ["the proportion of incident patients dying because of"](https://www.sciencedirect.com/topics/medicine-and-dentistry/case-fatality-rate) COVID-19 in this case. As mentioned previously, March 18th, the date with the first reported death breaks the record of zero case fatality rate by 0.002. Case fatality rate has either been increasing gradually or remained the same as previous day(s), until June 4th, the rate started to decline steadily afterwards. The spike for case fatality rate appears from June 2nd to June 4th with the rate of 0.044. However, the designated stringency index within this period of time reduces from 71.30 to 69.91, which are not the highest indices during this pandemic.
+
+With the continuous fall in case fatality rate after June 4th, it reaches the lowest point of 0.031 on August 31st and keeps maintaining the same value on September 1st, which is only 3 days away from now! 0.031 of case fatality rate is almost equivalent with the value on April 13th and April 14th. Even though the rate goes up between April 13th (0.03) and April 14th (0.032), the stringency index contrarily drops from 87.96 to 82.41.
+
+Unfortunately, the stringency index is not available since August 25th so the analysis is  limited. Besides, there is no clear pattern and trend in regards to stringency index prior to and after June 4th. Nevertheless, as case fatality rate involves death-related figures, based on my observations, it is not surprising that this indicator isn't of high relevance with stringency index.
+```{r, include=TRUE, echo=FALSE}
+a1 <- ggplot(cfa, aes(x = date)) +
+  geom_line(aes(y = `case fatality rate`), color = "red") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5)) +
+  xlab("Date") +
+  ylab("Rate") +
+  ggtitle("Case fatality rate in Portugal")
+ggplotly(a1)
+```
+
+```{r, echo=FALSE}
+stringency_lvl <- portugal_clean %>%
+  mutate("stringency_index_level" = case_when(
+  str_starts(stringency_index, "1") ~ "10 to 20",
+  str_starts(stringency_index, "2") ~ "20 to 30",
+  str_starts(stringency_index, "3") ~ "30 to 40",
+  str_starts(stringency_index, "6") ~ "60 to 70",
+  str_starts(stringency_index, "7") ~ "70 to 80",
+  str_starts(stringency_index, "8") ~ "80 to 90"
+  )) %>%
+  select(location, date, total_cases, new_cases, total_deaths, new_deaths, stringency_index, stringency_index_level)
+```
+
+### Stringency index vs new cases
+Looking at the box plot below, the first thing that comes up in my mind is the bizarre minimum of -161 in stringency indices 80-90. As mentioned earlier, this is because of the overestimate of ECDC that requires to be corrected. Thus, the new cases minimum for 80-90 stringency indices should be 143, reported on March 20th. With this information considered, the range for new cases number is still the largest for stringency indices 80-90, compared with all other levels. Moreover, Q1, median, Q3, maximum and outlier for indices 80-90 is also the highest of those of all levels. This seems reasonable as a measure of the Portugese government attempting to control the crazy growth in new cases.
+
+The unlabelled gray box depicts the distribution of unknown stringency index since August 25th. Yet its distribution pattern of new cases is much higher than that of stringency indices from 10 to 40 and is more similar to that of 60 to 80 indices. Therefore, the recent rising of new cases might be a factor which brings up the UK government's awareness towards Portugal in re-evaluating the traveling policy. From this, I anticipate that the stringency index will increase in Portugal to prevent another rapid growth in new cases.
+
+Except for the unknown stringency index box, the distributions of new cases mostly follow along with the change in stringency index levels as displayed in order. In other words, higher new cases numbers tend to lead to higher stringency indices. This is not surprising and indicates the efficiency of the Portugese government along with their people's efforts in managing the pandemic condition.
+```{r, include=TRUE, echo=FALSE}
+a2 <- ggplot(stringency_lvl, aes(x = stringency_index_level, y = new_cases, fill = stringency_index_level)) +
+  geom_boxplot() +
+  geom_jitter(color="black", size=0.4, alpha=0.9) +
+  coord_flip() +
+  theme(
+      legend.position="none",
+      plot.title = element_text(size=11)
+    ) +
+    ggtitle("Stringency index by levels against new cases") +
+    xlab("Stringency index by levels") +
+    ylab("New cases")
+ggplotly(a2)
+```
+
+Lastly, the estimatation of new cases against stringency index is carried out in an attempt to inspect their relationship through summary statistics. 
+Obtaining a positive value for estimate is quite understandable. This confirms the phenomenon where as the number of new cases goes up by one additional case, we'd expect the stringency index to increase by 0.041, holding all else constant. It's optimistic to see the value for standard error (0.004) is quite small, implying that the actual stringency index is somehow varied by 0.004 from the estimate. Further, the p-value of 0 suggests that this relationship between new cases and stringency index is evident. 
+
+```{r, include=TRUE, echo=FALSE}
+c1 <- lm(stringency_index ~ new_cases, data = cfa)
+c2 <- tidy(c1) 
+  
+kable(c2, caption = "Summary statistics of new cases against stringency index") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+I'd see the estimate of 0.041 as the responsiveness of stringency index for the change in number of new cases. If 100 new cases was found in a day, the stringency index would potentially increase by 60.029! As I'm not a resident in Portugal, it's hard for me to imagine how this could impact our lives. But, most importantly, let's hope this pandemic can end as soon as possible!
+
+### References
+```{r, include=FALSE}
+citation("broom")
+citation("DT")
+citation("ggiraph")
+citation("kableExtra")
+citation("lubridate")
+citation("plotly")
+citation("readr")
+citation("tidyverse")
+```
+C. Sievert. Interactive Web-Based Data Visualization with R, plotly, and shiny.
+  Chapman and Hall/CRC Florida, 2020.
+
+David Gohel and Panagiotis Skintzos (2020). ggiraph: Make 'ggplot2' Graphics
+  Interactive. R package version 0.7.8.
+  https://CRAN.R-project.org/package=ggiraph
+
+David Robinson, Alex Hayes and Simon Couch (2020). broom: Convert Statistical
+  Objects into Tidy Tibbles. R package version 0.7.0.
+  https://CRAN.R-project.org/package=broom
+
+Demony, C. (2020, September 2). Portugal's COVID-19 cases raise UK quarantine fears. *Reuters*.
+  https://www.reuters.com/article/us-health-coronavirus-portugal-britain/portugals-covid-19-cases-raise-uk-quarantine-fears-idUSKBN25S5DU
+
+Garrett Grolemund, Hadley Wickham (2011). Dates and Times Made Easy with
+  lubridate. Journal of Statistical Software, 40(3), 1-25. URL
+  http://www.jstatsoft.org/v40/i03/.
+
+Hadley Wickham, Jim Hester and Romain Francois (2018). readr: Read Rectangular
+  Text Data. R package version 1.3.1. https://CRAN.R-project.org/package=readr
+  
+Hao Zhu (2019). kableExtra: Construct Complex Table with 'kable' and Pipe
+  Syntax. R package version 1.1.0. https://CRAN.R-project.org/package=kableExtra
+  
+Pollet, M. (2020, September 1). COVID-19: which European country has the strictest response policy? *Euronews*.
+  https://www.euronews.com/2020/08/31/covid-19-which-european-country-has-the-strictest-response-policy
+  
+Ritchie, H. (2020). Coronavirus Source Data. Retrieved from https://ourworldindata.org/coronavirus-source-data
+
+Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source
+  Software, 4(43), 1686, https://doi.org/10.21105/joss.01686
+  
+Yihui Xie, Joe Cheng and Xianying Tan (2020). DT: A Wrapper of the JavaScript
+  Library 'DataTables'. R package version 0.15.
+  https://CRAN.R-project.org/package=DT
+  
+Zeegers, M. P., Bours, M. J. L., Freeman, M.D. (2016). Chapter 3 - Methods Used in Forensic Epidemiologic Analysis. In D.Michael D. Freeman, P. Maurice & P. Zeegers (Eds.), *Forensic Epidemiology* (pp. 71-110). Retrieved from http://www.sciencedirect.com/science/article/pii/B9780124045842000033
+
+
+
