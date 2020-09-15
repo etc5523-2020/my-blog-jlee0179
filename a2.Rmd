@@ -1,0 +1,136 @@
+---
+title: "COVID-19 in Poland"
+date: "15/09/2020"
+output: bookdown::html_document2
+---
+
+In this post, we will be looking at how Coronavirus has been developing in Poland, a country located in Central Europe with a total population of nearly 40 millions. Then we will be estimating the current situation. <br />
+
+### Data description
+The data used for this post comes from the European CDC ( [European Centre for Disease Prevention and Control](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide)). There are 12 variables within this dataset - `dateRep`, `day`, `month`, `year`, `cases`, `deaths`, `countriesAndTerritories`, `geoId`, `countryterritoryCode`, `popData2019`, `continentExp` and `Cumulative_number_for_14_days_of_COVID.19_cases_per_100000`. This original dataset contains the information of all European countries. Therefore, the first step is to extract the data that only concerns with Poland. This is done by subsetting the original dataset with the criteria `(countriesAndTerritories == "Poland")`.
+```{r message=FALSE, warning=FALSE, echo=FALSE, include=FALSE}
+library(tidyverse)
+library(utils)
+library(data.table)
+library(plotly)
+library(shiny)
+library(magrittr)
+library(dplyr)
+library(lubridate)
+library(bookdown)
+
+Original_DT <- read.csv("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv", na.strings = "", fileEncoding = "UTF-8-BOM")
+
+Poland_DT<-as.data.table(subset(Original_DT, countriesAndTerritories == "Poland"))
+```
+
+### Data Story 1: How has Corona virus been developing in Poland? 
+
+Unavoidly, Poland also suffers from the pandemic. Nearly eight months since the pandemic, we would like to know: **how has the Corona virus been developing in this country?** 
+
+To answer this question, the most intuitive way of knowing the outbreak is to look at the daily new cases graph \@ref(fig:1a), which records daily new cases from March 4th, 2020 to current (September 15, 2020). We can observe that in Poland, during the frist month of the outbreak, COVID-19 spread expotentially, then the curve seems to be flattened in the next few months until late July. In other words, during this period, there are a number of new cases every day, but the spread was still under control intead of growing exponentially. However, a second bounce was spotted in August, given the largest number (903) of new cases on August 22 since the pandemic. This also corresponds to what the other graph \@ref(fig:1b) (Cumulative number for 14 days per 100 thousands population) presents. As we know, the incubation period for COVID-19 could be 14 days. Therefore, it is worthwhile investigating into this graph. From Graph \@ref(fig:1b), we can see that it shares similar curve pattern with the daily new cases graph \@ref(fig:1a) where two waves of spread occurred in March and August, respectively. When the curve extends in the horizontal direction or has a downward trend, it indicates that the transmission of COVID-19 is effectively controlled and the epidemic is developing in a good condition. Therefore, when we see the curve goes down from September, we are relatively confident to say that the pandemic is turning to a good direction in Poland.
+
+
+```{r 1a, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Daily New Cases Curve"}
+Dates_Vector<-rev(Poland_DT[, dateRep])
+Dates_Trans<-as.Date(Dates_Vector, format="%d/%m/%y")
+Cases_Vector<-rev(Poland_DT[, cases])
+Death_Vector<-rev(Poland_DT[, deaths])
+CumuNum_14days_Vector<-rev(Poland_DT[, Cumulative_number_for_14_days_of_COVID.19_cases_per_100000])
+
+Cases_df<-data.frame(Dates_Trans, Cases_Vector, Death_Vector, CumuNum_14days_Vector)
+
+#plot_ly(data = Cases_df, x = ~Dates_Vector, y = ~Cases_Vector)
+fig1<-plot_ly(data = Cases_df, x = ~Dates_Trans, y = ~Cases_Vector, type = 'scatter', mode = 'lines') %>%
+ 
+  layout(title = 'Daily New Cases',
+         xaxis = list(title = 'Dates',
+                      zeroline = TRUE),
+         yaxis = list(title = 'New Cases'))
+fig1 
+```
+<br /><br />
+
+```{r 1b, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="14-Days Cumulative Cases Per 100K Population Curve"}
+fig2<-plot_ly(data = Cases_df, x = ~Dates_Trans, y = ~CumuNum_14days_Vector, type = 'scatter', mode = 'lines') %>%
+ 
+  layout(title = 'Cumulative_Number_14Days_Per100KPopulation',
+         xaxis = list(title = 'Dates',
+                      zeroline = TRUE),
+         yaxis = list(title = 'Cumu Cases'))
+fig2
+```
+
+### Data Story 2: Is the situation really turning to a good direction now?
+
+If we only look at Figure \@ref(fig:1a) and Figure \@ref(fig:1b), it seems that there is a turning point from September. We might easily draw to the conclusion that the pandemic is moving towards a better direction that the spread is slowing down. Hold on...Are we sure? To further check whether our conclusion is valid or not, we can take the daily new cases and 14-days cumulative number of cases data to plot boxplots for both August and September. Figure \@ref(fig:2a) suggests that the median of daily new cases for August is approximately 200 greater than that of September. Figure \@ref(fig:2b) also shows that the median 14-days cumulative number of cases for August is greater than that of September with a difference of nearly 2. It appears that both graphs indicate the same trend. However, is this difference significantly evident? Or in other word, does this difference significantly indicate the spread is slowing down? In order to test this hypothsis, we conduct an unpaired t-test on the 14-days cumulative cases data. This t-test carries out with the null hypothesis, stating that there is no significant difference in the average of 14-days cumulative cases bwtween August and Sepetember. From the following output, the p-value of the test is 0.294, which is much greater than the significant level alpha = 0.05. Hence, we can conclude that there is no significant evidence to confirm that the mean 14-days cumulative number of cases for August is greater than that of Sepetember. Unfortunately, we can't say for sure that the situation is significantly turning to a good direction. <br /> <br />
+
+
+```{r 2a, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Cumulative New Cases Boxplots for August and September"}
+DailyNewCasesSept<-subset(Poland_DT$cases, Poland_DT$month == "9")
+DailyNewCasesAugust<-subset(Poland_DT$cases, Poland_DT$month == "8")
+
+fig3 <- plot_ly(y = DailyNewCasesAugust, name = "August", type = "box") %>% add_trace(y = DailyNewCasesSept, name = "September") %>% layout(title = "Daily New Cases (August VS Sepetember)")
+fig3
+```
+
+
+```{r 2b, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Cumulative New Cases Boxplots for August and September"}
+CumCaseSept<-subset(Poland_DT$Cumulative_number_for_14_days_of_COVID.19_cases_per_100000, Poland_DT$month == "9")
+CumCaseAugust<-subset(Poland_DT$Cumulative_number_for_14_days_of_COVID.19_cases_per_100000, Poland_DT$month == "8")
+
+fig4 <- plot_ly(y = CumCaseAugust, name = "August", type = "box") %>% add_trace(y = CumCaseSept, name = "September") %>% layout(title = "Daily Cumulative Cases (August VS Sepetember)")
+fig4
+```
+<br /> <br />
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+CompareCumu <- t.test(CumCaseAugust, CumCaseSept, var.equal = TRUE)
+CompareCumu 
+```
+
+### References
+```{r echo=FALSE, include=FALSE}
+citation("tidyverse")
+citation("utils")
+citation("data.table")
+citation("plotly")
+citation("shiny")
+citation("magrittr")
+citation("dplyr")
+citation("lubridate")
+citation("bookdown")
+```
+C. Sievert. Interactive Web-Based Data Visualization with R, plotly, and shiny.
+  Chapman and Hall/CRC Florida, 2020.
+
+Garrett Grolemund, Hadley Wickham (2011). Dates and Times Made Easy with
+  lubridate. Journal of Statistical Software, 40(3), 1-25. URL
+  http://www.jstatsoft.org/v40/i03/.
+
+Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2020). dplyr:
+  A Grammar of Data Manipulation. R package version 1.0.2.
+  https://CRAN.R-project.org/package=dplyr
+
+Matt Dowle and Arun Srinivasan (2020). data.table: Extension of `data.frame`. R
+  package version 1.13.0. https://CRAN.R-project.org/package=data.table
+
+R Core Team (2020). R: A language and environment for statistical computing. R
+  Foundation for Statistical Computing, Vienna, Austria. URL
+  https://www.R-project.org/.
+  
+Stefan Milton Bache and Hadley Wickham (2014). magrittr: A Forward-Pipe
+  Operator for R. R package version 1.5.
+  https://CRAN.R-project.org/package=magrittr  
+  
+Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source
+  Software, 4(43), 1686, https://doi.org/10.21105/joss.01686
+  
+Winston Chang, Joe Cheng, JJ Allaire, Yihui Xie and Jonathan McPherson (2020).
+  shiny: Web Application Framework for R. R package version 1.5.0.
+  https://CRAN.R-project.org/package=shiny
+  
+Yihui Xie (2020). bookdown: Authoring Books and Technical Documents with R
+  Markdown. R package version 0.20.
+
+Yihui Xie (2016). bookdown: Authoring Books and Technical Documents with R
+  Markdown. Chapman and Hall/CRC. ISBN 978-1138700109  

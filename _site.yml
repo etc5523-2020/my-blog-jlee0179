@@ -4,6 +4,8 @@ navbar:
   left:
     - text: "Home"
       href: index.html
+    - text: "New Post"
+      href: a2.html
     - text: "About"
       href: about.html
 output:
