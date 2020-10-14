@@ -6,6 +6,8 @@ navbar:
       href: index.html
     - text: "New Post"
       href: a2.html
+    - text: "App self reflection"
+      href: a3.html
     - text: "About"
       href: about.html
 output:

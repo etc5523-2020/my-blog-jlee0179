@@ -1,7 +1,7 @@
 ---
 title: "COVID-19 in Poland"
 date: "15/09/2020"
-output: bookdown::html_document2
+output: html_document
 ---
 
 In this post, we will be looking at how Coronavirus has been developing in Poland, a country located in Central Europe with a total population of nearly 40 millions. Then we will be estimating the current situation. <br />

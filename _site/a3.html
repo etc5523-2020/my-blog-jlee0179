@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Joyce Lee" />
 
 
-<title>About This Website</title>
+<title>a3</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -278,12 +279,25 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">About This Website</h1>
+<h1 class="title toc-ignore">a3</h1>
+<h4 class="author">Joyce Lee</h4>
+<h4 class="date">13/10/2020</h4>
 
 </div>
 
 
-<p>More about this website.</p>
+<div id="introducing-covid-19-in-eu" class="section level2">
+<h2>Introducing “COVID-19 in EU”</h2>
+“COVID-19 in EU” is an interactive web application built with “shiny” package along with other packages - “tidyverse”, “shinyWidgets”, “plotly”, “reactable” and “ggthemes” in R. It delivers the information of Covid-19 conditions across the European Union member countries. The two tabs, “Main” and “About”, displayed on the top of the app provide different aspects of messages to our users.
+<p>
+“Main” consists of one bar graph - “Daily number of confirmed cases and deaths”, one line graph - “Trend of cumulative cases and deaths, according to available data recorded for each country” and a table - “Covid-19 related information recorded on the 5th of each month, from 5th January, 2020 to 5th October, 2020”. The most common feature shared among these two graphs and the table is that they are all user-oriented that the output will change as users input their interested data. The title pretty much explains the output that the bar graph produces. Here, users are able to select their interested date and location(s). This will automatically generate the figures of confirmed cases and deaths in a visual format with x-axis labeling the location, while y-axis provides the measurement of number. Due to the adoption of “plotly” package, users can hover on the bars to see the exact numbers.
+<p>
+Following “daily numbers”, the line graph draws the trend of cumulative cases and deaths numbers. Since the date where the first confirmed cases or deaths confirmed varies across different locations, the duration for the trend is not set fixed, rather, it is adjustable in response to users’ interest. X-axis, “date”, represents the duration and y-axis marks the cases and deaths numbers. Again, with “plotly” package, users can get the exact cases or deaths numbers more specifically by hovering over the lines.
+<p>
+Lastly, the table exhibits the cumulative cases and deaths numbers for each country on the fifth of each month from January 2020 until October 2020, as well as their respective population, life expectancy and case fatality rate. The slider enables users to adjust the duration or the date according to their interests. The ideal of this table is to invite users to make comparisons between more variables and to explore the variation within the trend. To realise this, some features such as sorting the order of values and the search bar are used from “reactable” package to allow greater manipulation for users.
+<p>
+<p>Comprising three sub-sections, “About” acts as the background of this app. It summarises the purpose, the way the data is used in this app including the data source and the creator.</p>
+</div>
 
 
 
