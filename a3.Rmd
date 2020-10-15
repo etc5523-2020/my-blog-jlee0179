@@ -53,4 +53,7 @@ The two colours in the bar graph “Daily number of confirmed cases and deaths�
 <br>I am not able to recognise every EU member country. With this assumption that some users might not be familiar with every EU country, I would include the flag next to each country name in the cells under the “location” column in the table. This is doable with the “reactable” package, which I had used to build the table. To do this, the items that are to be contained within the cells under “location” need to be redefined with a function and then call on “div” with “img” to follow the path where the flag image is saved. This would hopefully “decorate” the appearance, as well as enrich the content of this app.
 
 
-<h4>Addition not possible due to limitation in data or technology
+<h4>Addition not possible due to limitation in data or technology</h4>
+*EU map*
+<br>An addition I would like to include is a map for all EU countries that reveals the severity of Covid-19 conditions over all EU countries. Ideally, the severity levels can be shown by various circle sizes according to the total cases number. Nonetheless, the dataset used does not contain longitude and latitude for all countries which is considered as the limitation in data. 
+For now, a possible solution I could think of is to manually search the longitude and latitude for each EU country online, then combine them with the original dataset through web scraping. 
