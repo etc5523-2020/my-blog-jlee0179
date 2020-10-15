@@ -44,5 +44,9 @@ The two colours in the bar graph â€œDaily number of confirmed cases and deathsâ€
 
 
 
-<h4>Plausible addition
+<h4>Plausible addition</h4>
+*Comparison between EU member and non-EU member European countries.*
+<br>Despite that this app mainly studies the impact of Covid-19 in the EU countries, it would be interesting to make comparisons with that in non-EU European countries. This idea is feasible since the dataset used in this app contains data globally. With different total populations of the EU countries and non-EU European countries, I can take all total cases number divided by total population for EU countries as a whole, then repeat this process for non-EU European countries. With the two calculated numbers, I can get an overview of, to what extent, people or governments of the EU and non-EU European countries had been preventing themselves from contracting Covid-19. I would present the two figures in two seperate value boxes so users can capture this brief idea in a short time.
+<br>Case fatality rate for EU countries and non-EU European countries, as a whole for each might contribute towards the comprehensiveness of the comparison. This can be done by summing up the total deaths numbers of all EU member countries, then divided by the summation of total cases number of all EU countries. In the same way, repeat this process for non-EU European countries. The calculated case fatality rates for both enable users to examine whether it is EU countries or non-EU European countries that had been taking better care of the patients with lower case fatality rate.
+
 <h4>Addition not possible due to limitation in data or technology
