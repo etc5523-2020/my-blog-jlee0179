@@ -31,6 +31,9 @@ Characterised by [connecting data points over a time interval](https://www.inves
 
 
 
-<h4>What can be improved
+<h4>What can be improved</h4>
+<b>Label names within legend should be renamed.</b><br>
+The two colours in the bar graph “Daily number of confirmed cases and deaths”, distinguish the types, which are cases and deaths. Although this message can be found within the legend box, the label names need to be better presented. Instead of naming them as “new_cases” and “new_deaths”, the names should be replaced with something like “Cases” and “Deaths” so as to refine the overall wording quality and the appearance. 
+
 <h4>Plausible addition
 <h4>Addition not possible due to limitation in data or technology
