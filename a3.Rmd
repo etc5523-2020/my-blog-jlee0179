@@ -55,10 +55,10 @@ The two colours in the bar graph â€œDaily number of confirmed cases and deathsâ€
 
 <h4>Addition not possible due to limitation in data or technology</h4>
 *EU map*
-<br>An addition I would like to include is a map for all EU countries that reveals the severity of Covid-19 conditions over all EU countries. Ideally, the severity levels can be shown by various circle sizes according to the total cases number. Nonetheless, the dataset used does not contain longitude and latitude for all countries which is considered as the limitation in data. 
+<br>An addition I would like to include is a map for all EU countries that reveals the severity of Covid-19 conditions over all EU countries. Ideally, the severity levels can be shown by the dimension of circles according to the total cases number. Nonetheless, the dataset used does not contain longitude and latitude for all countries which is considered as a limitation in data. 
 For now, a possible solution I could think of is to manually search the longitude and latitude for each EU country online, then combine them with the original dataset through web scraping. 
 
-## Citation
+## References
 Halton, C. (2019). Line Graph. Retrieved from https://www.investopedia.com/terms/l/line-graph.asp
 
 Kabacoff, R. (2018). *Data Visualization with R (an opensource textbook)*. Retrieved from https://rkabacoff.github.io/datavis/
