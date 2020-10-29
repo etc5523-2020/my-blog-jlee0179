@@ -15,7 +15,14 @@ Chenjie successfully uses version control that the entire package is hosted on g
 
 ## What did I think this package would do? Did it do it?
 <h4>Structure</h4>
-The folders and files altogether fulfill each of their purpose well. First, the required fields in DESCRIPTION are all filled with appropriate responses that I can immediately grasp the general idea of this package. All packages, either required or recommended, are clearly listed in "Dependencies" section that I didn't encounter any issue of having to install other packages after installing `covid`. Speaking of package installation, Chenjie explains the instructions for loading the package, step-by-step in README files, in detail. Besides, examples of the output are clearly displayed.
+The folders and files altogether fulfill each of their purpose well. 
+First, the required fields in DESCRIPTION are all filled with appropriate responses that I can immediately grasp the general idea of this package. All packages, either required or recommended, are clearly listed in "Dependencies" section that I didn't encounter any issue having to install other packages after installing `covid`. 
+Speaking of package installation, Chenjie explains the instructions for loading the package, step-by-step in README files in detail. Besides, examples of the output are clearly displayed. 
+Following on documentation, a vignette is placed inside the "vignettes" folder. Nevertheless, the contents of the vignette differs a little from what I think as Chenjie focuses on describing the dataset and how it can be manipulated to make plots. My point of view on this is to concentrate more about the app or the package functionality. Yet it is interesting to spot this discrepancy as I start thinking that incorporating some demonstrations on the use of data as Chenjie did might enrich the overall contents more. 
+The contents of _pkgdown.yml and pkgdown.yaml located in .github folder both align with my understanding of what is to be included. Specifically, it is fun to see some elements are customised such as the cerulean theme.
+The remaining folders (tests, R, man, data, data-raw and inst) all contain the relevant and proper files. For instance, the R files built for the 8 functions and 1 dataset have successfully created their respective .Rd files in man folder. In addition, the original `coronavirus.csv` in data-raw  also has its .rda file in data folder.
+The documentation structure is well formatted with roxygen2 which makes the reading easy and clear.
+Therefore, most of the features in `covid` package are consistent with my knowledge of the package structure.
 
 <h4>Functions</h4>
 Taking in the dataset and one of the categories of Covid-19 measurements("cases_new", "deaths_new" and "recovered_new"), `type_select` integrates with `selecttype` function to produce the chosen category.
