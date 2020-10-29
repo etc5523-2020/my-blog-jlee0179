@@ -8,6 +8,8 @@ navbar:
       href: a2.html
     - text: "App self reflection"
       href: a3.html
+    - text: "Peer review"
+      href: a4.html
     - text: "About"
       href: about.html
 output:
