@@ -10,12 +10,14 @@ The package I reviewed is called "covid", created and maintained by Chenjie Gong
 <center>
 ![Overall package structure in working directory](dir_structure.png)
 </center>
-`covid` package touches on three aspects of a package's capability with its multi-dimensional usage. With the dataset obtained from Johns Hopkins University Center for Systems Science and Engineering (JHU CCSE), Chenjie combines it to `covid` package and makes it available, shareable in R. A shiny application named "COVID-19 TRACKER" made by Chenjie earlier is also built with the same dataset. "COVID-19 TRACKER" is subsequently merged with `covid` package, so users can access the app through `covid` package. 8 functions are contained in `covid` where most of them can be used intuitively in the console, while others seem to be more suitable to incorporate with the code in app.R file. The package as a whole is designed to facilitate the exploration of Covid-19 condition worldwide.
+`covid` package touches on three aspects of a package's capability with its multi-dimensional usage. With the dataset obtained from Johns Hopkins University Center for Systems Science and Engineering (JHU CCSE), Chenjie combines it to `covid` package and makes it available, shareable in R. A shiny application named "COVID-19 TRACKER" made by Chenjie earlier is also built with the same dataset. "COVID-19 TRACKER" is subsequently merged with `covid` package, so we can access the app through `covid` package. 8 functions are contained in `covid` where most of them can be used intuitively in the console, while others seem to be more suitable to incorporate with the code in app.R file. The package as a whole is designed to facilitate the exploration of Covid-19 condition worldwide.
 Chenjie successfully uses version control that the entire package is hosted on github, which enables a high level of transparency and resproducibility.
 
 ## What did I think this package would do? Did it do it?
-The folders and files altogether fulfill each of their purpose well. It can be seen 
+<h4>Structure</h4>
+The folders and files altogether fulfill each of their purpose well. First, the required fields in DESCRIPTION are all filled with appropriate responses that I can immediately grasp the general idea of this package. All packages, either required or recommended, are clearly listed in "Dependencies" section that I didn't encounter any issue of having to install other packages after installing `covid`. Speaking of package installation, Chenjie explains the instructions for loading the package, step-by-step in README files, in detail. Besides, examples of the output are clearly displayed.
 
+<h4>Functions</h4>
 Taking in the dataset and one of the categories of Covid-19 measurements("cases_new", "deaths_new" and "recovered_new"), `type_select` integrates with `selecttype` function to produce the chosen category.
 `plot_theme` serves as a theme generator that wraps the plots with specified theme.
 The usage for `plot_cases` is reflected in the app.R where it plots the new cases number according to users' selected country.
