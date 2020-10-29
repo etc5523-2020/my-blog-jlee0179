@@ -25,6 +25,7 @@ The documentation structure is well formatted with roxygen2 which makes the read
 Therefore, most of the features in `covid` package are consistent with my knowledge of the package structure.
 
 <h4>Functions</h4>
+My knowledge of the 8 functions are summarised as follows:
 Taking in the dataset and one of the categories of Covid-19 measurements("cases_new", "deaths_new" and "recovered_new"), `type_select` integrates with `selecttype` function to produce the chosen category.
 `plot_theme` serves as a theme generator that wraps the plots with specified theme.
 The usage for `plot_cases` is reflected in the app.R where it plots the new cases number according to users' selected country.
@@ -34,3 +35,13 @@ Bounded by the minimum and maximum dates of the date range, `selectdate` seems t
 `countryinput` acts as a collection of countries which is adopted to the drop-down list for selection and is further integrated with the table.
 Consisted of several categories of Covid-19 measurements("cases_new", "deaths_new" and "recovered_new"), `count_type` sums up the total number with the given date and the specified
 category in the input.
+
+The flow of the writing along with documentation for the functions both presents a high-level fluency. It turns out that the output of the functions match my presumption of the package functionality pretty well.
+
+## Improvements
+The functions are already well documented and written in a logical pattern. Yet to further demonstrate their association with the app, I would suggest to try integrating the functions with the relevant code in app.R. For example, `plot_cases` function can be applied to `output$countryBar` which will generate the bar plot in the first tab, "Top 10 New Cases Country". Also, I found myself a little confused when learning the `plot_theme` function. In the documentation, the argument "t" is noted as a theme. Thus, I think it will be helpful if the "theme" can be given with some examples in the documentation or being directly utilised in app.R. Again, `plot_theme` may be able to replace some code within `output$countryBar` as they share similar theme functions from `ggplot2`.
+
+The other recommendation concerns with the format of the vignette. Within the "Description" section, the layout of the html output seems a bit inconsistent with the author's intended output. To enhance the readability, it might be worthwhile to refine some elements like "@" within the text.
+
+## What I've learned 
+ 
