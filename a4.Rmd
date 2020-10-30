@@ -44,7 +44,7 @@ The other recommendation concerns with the format of the vignette. Within the "D
 ## What I've learned 
 The most significant thing that I've learned after reviewing Chenjie's work is the precise guidelines of setting up the required elements for the shiny app to work. Since the package functionality mostly surrounds the app, it is crucial to ensure people who load the repository to their local machine are able to access the app. I have not heard of "shinychromosome" before. With Chenjie's comprehensive explanations provided in README.md, I gain some knowledge on shinyChromosome and would consider trying it with my app as well! More importantly, the contents of his README file demonstrates a high level of adequacy where he has taken care of people's different habits when launching an app. This allows me to refine my understanding on what needs to be further emphasised in terms of the installation instruction. 
 
-
+I was not confident when writing unit tests for my package, being unsure of what are suitable for testing within a function. However, reading through the two unit tests in `covid` package, I've become more familiar with the broad concept of unit tests. To summarise, having unit tests enables creators to check whether the written functions together with the argument or input are in line with their expectations. For example, `expect_error()` function can be used by creators to check whether what they assume as an error in the functions would indeed result an error message.
 
 ## Appendix
 ## Package Review
