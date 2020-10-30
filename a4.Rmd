@@ -44,4 +44,28 @@ The functions are already well documented and written in a logical pattern. Yet 
 The other recommendation concerns with the format of the vignette. Within the "Description" section, the layout of the html output seems a bit inconsistent with the author's intended output. To enhance the readability, it might be worthwhile to refine some elements like "@" within the text.
 
 ## What I've learned 
+
+
+## Appendix
+## Package Review
+
+*Please check off boxes as applicable, and elaborate in comments below. 
+
+#### Documentation
+
+The package includes all the following forms of documentation:
+
+>- $\checkmark$ **Installation instructions:** for the package is found in README
+>- &nbsp;&nbsp; &nbsp;&nbsp; **Vignette(s)** demonstrating major functionality that runs successfully locally
+>- $\checkmark$ **Function Documentation:** for all exported functions in R help
+>- $\checkmark$ **Examples** for all exported functions in R Help that run successfully locally
+
+#### Functionality
+
+>- $\checkmark$ **Installation:** Installation succeeds as documented.
+>- $\checkmark$ **Functionality:** Any functional claims of the software been confirmed.
+>- $\checkmark$ **Automated tests:** Unit tests cover essential functions of the package
+   and a reasonable range of inputs and conditions. All tests pass on the local machine.
+
+---
  
