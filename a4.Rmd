@@ -1,5 +1,6 @@
 ---
 title: "Peer review"
+date: "30/10/2020"
 output: html_document
 ---
 
@@ -8,43 +9,41 @@ The package I reviewed is called "covid", created and maintained by Chenjie Gong
 <center>
 ![Overall package structure in working directory](dir_structure.png)
 </center>
-`covid` package touches on three aspects of a package's capability with its multi-dimensional usage. With the dataset obtained from Johns Hopkins University Center for Systems Science and Engineering (JHU CCSE), Chenjie combines it to `covid` package and makes it available, shareable in R. A shiny application named "COVID-19 TRACKER" made by Chenjie earlier is also built with the same dataset. "COVID-19 TRACKER" is subsequently merged with `covid` package, so we can access the app through `covid` package. 8 functions are contained in `covid` where most of them can be used intuitively in the console, while others seem to be more suitable to incorporate with the code in app.R file. The package as a whole is designed to facilitate the exploration of Covid-19 condition worldwide.
-Chenjie successfully uses version control that the entire package is hosted on github, which enables a high level of transparency and resproducibility.
+<p>`covid` package touches on three aspects of a package's capability with its multi-dimensional usage. With the dataset obtained from "Johns Hopkins University Center for Systems Science and Engineering" (JHU CCSE), Chenjie combines it to `covid` package and makes it available, shareable in R. A shiny application named "COVID-19 TRACKER" made by Chenjie earlier is also built with the same dataset. "COVID-19 TRACKER" is subsequently merged with `covid` package, so we can access the app through `covid` package. 8 functions are contained in `covid` where most of them can be used intuitively in the console, while others seem to be more suitable to incorporate with the code in app.R. The package as a whole is designed to facilitate the exploration of Covid-19 condition worldwide.
+<br>Chenjie successfully uses version control that the entire package is hosted on github, exhibiting a high level of transparency and resproducibility.
 
 ## What did I think this package would do? Did it do it?
 <h4>Structure</h4>
 The folders and files altogether fulfill each of their purpose well. 
-First, the required fields in DESCRIPTION are all filled with appropriate responses that I can immediately grasp the general idea of this package. All packages, either required or recommended, are clearly listed in "Dependencies" section that I didn't encounter any issue having to install other packages after installing `covid`. 
-Speaking of package installation, Chenjie explains the instructions for loading the package, step-by-step in README files in detail. Besides, examples of the output are clearly displayed. 
-Following on documentation, a vignette is placed inside the "vignettes" folder. Nevertheless, the contents of the vignette differs a little from what I think as Chenjie focuses on describing the dataset and how it can be manipulated to make plots. My point of view on this is to concentrate more about the app or the package functionality. Yet it is interesting to spot this discrepancy as I start thinking that incorporating some demonstrations on the use of data as Chenjie did might enrich the overall contents more. 
-The contents of _pkgdown.yml and pkgdown.yaml located in .github folder both align with my understanding of what is to be included. Specifically, it is fun to see some elements are customised such as the cerulean theme.
-The remaining folders (tests, R, man, data, data-raw and inst) all contain the relevant and proper files. For instance, the R files built for the 8 functions and 1 dataset have successfully created their respective .Rd files in man folder. In addition, the original `coronavirus.csv` in data-raw  also has its .rda file in data folder.
-The documentation structure is well formatted with roxygen2 which makes the reading easy and clear.
-Therefore, most of the features in `covid` package are consistent with my knowledge of the package structure.
+<p>First, the required fields in DESCRIPTION are all filled with appropriate responses that I can immediately grasp the general idea of this package. All packages, either required or recommended, are clearly listed in "Dependencies" section that I didn't encounter any issue having to install other packages after installing `covid`. 
+<br>Speaking of package installation, Chenjie explains the instructions for loading the package, step-by-step in README files in detail. Besides, examples of the output are clearly displayed. 
+<br>Following on documentation, a vignette is placed inside `vignettes` folder. Nevertheless, the contents of the vignette differs a little from what I think, as Chenjie focuses on describing the dataset and how it can be manipulated to make plots. My point of view on this is to concentrate more about the app or the package functionality. Yet it is interesting to spot this discrepancy as I start thinking that incorporating some demonstrations on the use of data as Chenjie did might enrich the overall contents more. 
+<br>The contents of _pkgdown.yml and pkgdown.yaml located in `.github` folder both align with my understanding of what is to be included. Specifically, it is fun to see some elements are customised such as the cerulean theme.
+<br>The remaining folders (`tests`, `R`, `man`, `data`, `data-raw` and `inst`) all contain the relevant and proper files. For instance, the R files built for the 8 functions and 1 dataset have successfully created their respective .Rd files in `man` folder. In addition, the original `coronavirus.csv` in `data-raw`  also has its .rda file in `data` folder. The documentation structure is well formatted with `roxygen2` which makes the reading easy and clear.
+<br>Therefore, most features in `covid` package are consistent with my knowledge of the package structure.
 
 <h4>Functions</h4>
 My knowledge of the 8 functions are summarised as follows:
-Taking in the dataset and one of the categories of Covid-19 measurements("cases_new", "deaths_new" and "recovered_new"), `type_select` integrates with `selecttype` function to produce the chosen category.
-`plot_theme` serves as a theme generator that wraps the plots with specified theme.
-The usage for `plot_cases` is reflected in the app.R where it plots the new cases number according to users' selected country.
-Having the dataset as the only input, `n_countries` counts the distinct countries involved in `coronavirus` dataset.
-As the function name indicates, `launch_app` itself would directly launch the "COVID-19 TRACKER" app generated by app.R, without any input.
-Bounded by the minimum and maximum dates of the date range, `selectdate` seems to allow a date to be selected.
-`countryinput` acts as a collection of countries which is adopted to the drop-down list for selection and is further integrated with the table.
-Consisted of several categories of Covid-19 measurements("cases_new", "deaths_new" and "recovered_new"), `count_type` sums up the total number with the given date and the specified
+<p> - Taking in the dataset and one of the categories of Covid-19 measurements("cases_new", "deaths_new" and "recovered_new"), `type_select()` integrates with `selecttype` function to produce the chosen category.
+- `plot_theme()` serves as a theme generator that wraps the plots with the specified theme.
+- The usage for `plot_cases()` is reflected in app.R where it plots the new cases number according to users' selected country.
+- Having the dataset as the only input, `n_countries()` counts the distinct countries involved in `coronavirus` dataset.
+- As the function name indicates, `launch_app()` itself would directly launch the "COVID-19 TRACKER" app generated by app.R, without any input.
+- Bounded by the minimum and maximum dates of the date range, `selectdate()` allows a date to be selected.
+- `countryinput()` acts as a collection of countries which is adopted to the drop-down list for selection and is further integrated with the table in “COVID-19 TRACKER”.
+- Consisted of several categories of Covid-19 measurements("cases_new", "deaths_new" and "recovered_new"), `count_type()` sums up the total number with the given date and the specified
 category in the input.
 
-The flow of the writing along with documentation for the functions both presents a high-level fluency. It turns out that the output of the functions match my presumption of the package functionality pretty well.
+<p>The flow of the writing, along with documentation for the functions both present a high-level fluency. It turns out that the output of the functions match my presumptions of the package functionality pretty well.
 
 ## Improvements
-The functions are already well documented and written in a logical pattern. Yet to further demonstrate their association with the app, I would suggest to try integrating the functions with the relevant code in app.R. For example, `plot_cases` function can be applied to `output$countryBar` which will generate the bar plot in the first tab, "Top 10 New Cases Country". Also, I found myself a little confused when learning the `plot_theme` function. In the documentation, the argument "t" is noted as a theme. Thus, I think it will be helpful if the "theme" can be given with some examples in the documentation or being directly utilised in app.R. Again, `plot_theme` may be able to replace some code within `output$countryBar` as they share similar theme functions from `ggplot2`.
-
-The other recommendation concerns with the format of the vignette. Within the "Description" section, the layout of the html output seems a bit inconsistent with the author's intended output. To enhance the readability, it might be worthwhile to refine some elements like "@" within the text as the vignette eventually renders into a html output.
+The functions are well documented and written in a logical pattern. Yet to further demonstrate their association with the app, I would suggest to try integrating the functions with the relevant code in app.R. For example, `plot_cases` function can be applied to `output$countryBar` which will generate the bar plot in the first tab, "Top 10 New Cases Country". Also, I found myself a little confused when learning the `plot_theme` function. In the documentation, the argument "t" is noted as a theme. Thus, it might be helpful if the "theme" can be given with some examples in the documentation or being directly utilised in app.R. Again, `plot_theme` may be able to replace some code within `output$countryBar` as they share similar theme functions from `ggplot2`.
+<p>The other recommendation concerns with the format of the vignette. Within the "Description" section, the layout of the html output seems a bit inconsistent with the author's intended output. To enhance the readability, it might be worthwhile to refine some elements like "@" within the text as the vignette eventually renders into a html output.
 
 ## What I've learned 
-The most significant thing that I've learned after reviewing Chenjie's work is the precise guidelines of setting up the required elements for the shiny app to work. Since the package functionality mostly surrounds the app, it is crucial to ensure people who load the repository to their local machine are able to access the app. I have not heard of "shinychromosome" before. With Chenjie's comprehensive explanations provided in README.md, I gain some knowledge on shinyChromosome and would consider trying it with my app as well! More importantly, the contents of his README file demonstrates a high level of adequacy where he has taken care of people's different habits when launching an app. This allows me to refine my understanding on what needs to be further emphasised in terms of the installation instruction. 
+The most significant thing that I've learned after reviewing Chenjie's work is the precise guidelines of setting up the required elements for the shiny app to work. Since the package functionality mostly surrounds the app, it is crucial to ensure people who load the repository into their local machine are able to access the app. I have not heard of "shinychromosome" before. With Chenjie's comprehensive explanations provided in README.md, I gain some knowledge on "shinyChromosome" and would consider trying it with my app as well! More importantly, the contents of his README file demonstrates a high level of adequacy where he has taken care of people's different habits in launching an app. This allows me to refine my understanding on what needs to be further emphasised in terms of installation instructions. 
 
-I was not confident when writing unit tests for my package, being unsure of what are suitable for testing within a function. However, reading through the two unit tests in `covid` package, I've become more familiar with the broad concept of unit tests. To summarise, having unit tests enables creators to check whether the written functions together with the argument or input are in line with their expectations. For example, `expect_error()` function can be used by creators to check whether what they assume as an error in the functions would indeed result an error message.
+I was not confident in writing unit tests for my package, being unsure of which components are suitable for testing within a function. However, reading through the two unit tests in `covid` package, I've become more familiar with the broad concept of unit tests. To summarise, having unit tests enables creators to check whether the written functions together with the argument or input are in line with their expectations. For example, `expect_error()` function can be used by creators to check whether what they assume as an error would indeed result an error message.
 
 ## Appendix
 ## Package Review
