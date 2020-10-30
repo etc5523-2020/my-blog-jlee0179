@@ -1,7 +1,5 @@
 ---
 title: "Peer review"
-author: "Joyce Lee"
-date: "29/10/2020"
 output: html_document
 ---
 
@@ -41,9 +39,11 @@ The flow of the writing along with documentation for the functions both presents
 ## Improvements
 The functions are already well documented and written in a logical pattern. Yet to further demonstrate their association with the app, I would suggest to try integrating the functions with the relevant code in app.R. For example, `plot_cases` function can be applied to `output$countryBar` which will generate the bar plot in the first tab, "Top 10 New Cases Country". Also, I found myself a little confused when learning the `plot_theme` function. In the documentation, the argument "t" is noted as a theme. Thus, I think it will be helpful if the "theme" can be given with some examples in the documentation or being directly utilised in app.R. Again, `plot_theme` may be able to replace some code within `output$countryBar` as they share similar theme functions from `ggplot2`.
 
-The other recommendation concerns with the format of the vignette. Within the "Description" section, the layout of the html output seems a bit inconsistent with the author's intended output. To enhance the readability, it might be worthwhile to refine some elements like "@" within the text.
+The other recommendation concerns with the format of the vignette. Within the "Description" section, the layout of the html output seems a bit inconsistent with the author's intended output. To enhance the readability, it might be worthwhile to refine some elements like "@" within the text as the vignette eventually renders into a html output.
 
 ## What I've learned 
+The most significant thing that I've learned after reviewing Chenjie's work is the precise guidelines of setting up the required elements for the shiny app to work. Since the package functionality mostly surrounds the app, it is crucial to ensure people who load the repository to their local machine are able to access the app. I have not heard of "shinychromosome" before. With Chenjie's comprehensive explanations provided in README.md, I gain some knowledge on shinyChromosome and would consider trying it with my app as well! More importantly, the contents of his README file demonstrates a high level of adequacy where he has taken care of people's different habits when launching an app. This allows me to refine my understanding on what needs to be further emphasised in terms of the installation instruction. 
+
 
 
 ## Appendix
